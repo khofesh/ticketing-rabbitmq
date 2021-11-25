@@ -146,3 +146,19 @@ echo $password
 ### notes
 
 In order to make sure a message is never lost, RabbitMQ supports [message acknowledgments](https://www.rabbitmq.com/confirms.html). An ack(nowledgement) is sent back by the consumer to tell RabbitMQ that a particular message has been received, processed and that RabbitMQ is free to delete it.
+
+## test
+
+### routing
+
+```sh
+ts-node src/receive_log_direct.ts warning error > logs_from_rabbit.log
+```
+
+```sh
+ts-node src/receive_log_direct.ts info warning error
+```
+
+```sh
+ts-node src/emit_log_direct.ts error "Run. Run. "
+```
