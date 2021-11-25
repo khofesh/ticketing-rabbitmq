@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "produce": "ts-node-dev --rs --notify false src/producer.ts",
-    "consume": "ts-node-dev --rs --notify false src/consumer.ts"
+    "consume": "ts-node-dev --rs --notify false src/consumer.ts",
+    "worker": "ts-node-dev --rs --notify false src/worker.ts",
+    "subscribe": ""
   },
   "keywords": [],
   "author": "",
