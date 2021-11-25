@@ -142,3 +142,7 @@ echo $username
 password="$(kubectl get secret rabbit-default-user -o jsonpath='{.data.password}' | base64 --decode)"
 echo $password
 ```
+
+### notes
+
+In order to make sure a message is never lost, RabbitMQ supports [message acknowledgments](https://www.rabbitmq.com/confirms.html). An ack(nowledgement) is sent back by the consumer to tell RabbitMQ that a particular message has been received, processed and that RabbitMQ is free to delete it.
