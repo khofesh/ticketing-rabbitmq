@@ -91,6 +91,8 @@ amqp 1.0
 
 ### yaml config
 
+https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/
+
 ```yaml title="rabbitmq.yml"
 apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
