@@ -88,3 +88,57 @@ https://www.rabbitmq.com/devtools.html
 amqp 1.0
 
 - https://github.com/amqp/rhea
+
+### yaml config
+
+```yaml title="rabbitmq.yml"
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbit
+spec:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 800m
+      memory: 1Gi
+```
+
+apply the config
+
+```sh
+kubectl apply -f infra/k8s/rabbitmq.yml
+```
+
+check
+
+```sh
+fahmad@ryzen ticketing-rabbitmq]$  kubectl get pods
+NAME              READY   STATUS    RESTARTS   AGE
+rabbit-server-0   1/1     Running   0          15m
+[fahmad@ryzen ticketing-rabbitmq]$  kubectl get services
+NAME           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                        AGE
+kubernetes     ClusterIP   10.96.0.1       <none>        443/TCP                        37d
+rabbit         ClusterIP   10.110.18.122   <none>        5672/TCP,15672/TCP,15692/TCP   15m
+rabbit-nodes   ClusterIP   None            <none>        4369/TCP,25672/TCP             15m
+
+```
+
+port forwarding
+
+```sh
+kubectl port-forward rabbit-server-0 5672:5672
+```
+
+get default username and password
+
+```sh
+username="$(kubectl get secret rabbit-default-user -o jsonpath='{.data.username}' | base64 --decode)"
+echo $username
+
+password="$(kubectl get secret rabbit-default-user -o jsonpath='{.data.password}' | base64 --decode)"
+echo $password
+```

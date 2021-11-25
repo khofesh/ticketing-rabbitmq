@@ -1,37 +1,31 @@
-import { connect, StringCodec, NatsConnection } from "nats";
+import amqp from "amqplib";
+import dotenv from "dotenv";
 
-const server = "http://localhost:4222";
+dotenv.config();
 
-let nc: NatsConnection;
-const doSomething = async (v: string) => {
-  try {
-    nc = await connect({ servers: v });
-    console.log(`connected to ${nc.getServer()}`);
+amqp
+  .connect(
+    `amqp://${process.env.RABBIT_USER}:${process.env.RABBIT_PASSWORD}@localhost`
+  )
+  .then(async function (conn) {
+    process.once("SIGINT", function () {
+      conn.close();
+    });
 
-    // do something with the connection
+    const ch = await conn.createChannel();
+    let ok = ch.assertQueue("hello", { durable: false });
 
-    // create a codec
-    const sc = StringCodec();
-    // create a simple subscriber and iterate over messages
-    // matching the subscription
-    const sub = nc.subscribe("ticket:created");
-    for await (const m of sub) {
-      console.log(`[${sub.getProcessed()}]: ${sc.decode(m.data)}`);
-    }
-  } catch (error) {
-    console.log(`error connecting to ${JSON.stringify(v)}`);
-    console.error(error);
-  }
-};
+    const something = ok.then(function (_qok) {
+      return ch.consume(
+        "hello",
+        function (msg) {
+          console.log(" [x] Received '%s'", msg?.content.toString());
+        },
+        { noAck: true }
+      );
+    });
 
-doSomething(server);
-
-process.on("SIGINT", async () => {
-  await nc.close();
-
-  return console.log("subscription closed");
-});
-process.on("SIGTERM", async () => {
-  await nc.close();
-  return console.log("subscription closed");
-});
+    await something;
+    console.log(" [*] Waiting for messages. To exit press CTRL+C");
+  })
+  .catch(console.warn);
