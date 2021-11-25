@@ -149,7 +149,41 @@ In order to make sure a message is never lost, RabbitMQ supports [message acknow
 
 ## test
 
+### work queues
+
+Distributing tasks among workers
+
+```sh
+ts-node src/worker.js
+```
+
+```sh
+ts-node src/worker.js
+```
+
+```sh
+sh new-task.sh
+```
+
+### publish/subscribe
+
+Sending messages to many consumers at once
+
+```sh
+ts-node src/receive_logs.js > logs_from_rabbit.log
+```
+
+```sh
+ts-node src/receive_logs.js
+```
+
+```sh
+sh emit-log.sh
+```
+
 ### routing
+
+Receiving messages selectively
 
 ```sh
 ts-node src/receive_log_direct.ts warning error > logs_from_rabbit.log
