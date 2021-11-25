@@ -78,3 +78,13 @@ https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-autoscaler#auto
 https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#how-can-i-check-what-is-going-on-in-ca-
 
 https://github.com/rabbitmq/cluster-operator/blob/main/docs/examples/resource-limits/rabbitmq.yaml
+
+https://www.rabbitmq.com/kubernetes/operator/kubectl-plugin.html
+
+### Clients Libraries and Developer Tools
+
+https://www.rabbitmq.com/devtools.html
+
+amqp 1.0
+
+- https://github.com/amqp/rhea
