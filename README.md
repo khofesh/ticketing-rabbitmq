@@ -196,3 +196,29 @@ ts-node src/receive_log_direct.ts info warning error
 ```sh
 ts-node src/emit_log_direct.ts error "Run. Run. "
 ```
+
+### topic
+
+Receiving messages based on a pattern (topics)
+
+Although using the direct exchange improved our system, it still has limitations - it can't do routing based on multiple criteria.
+
+```sh
+ts-node src/receive_log_topic.ts '#'
+```
+
+```sh
+ts-node src/receive_log_topic.ts "kern.*"
+```
+
+```sh
+ts-node src/receive_log_topic.ts '*.critical'
+```
+
+```sh
+ts-node src/receive_log_topic.ts "kern.*"
+```
+
+```sh
+s-node src/emit_log_topic.ts 'kern.critical' 'a critical kernel error'
+```
