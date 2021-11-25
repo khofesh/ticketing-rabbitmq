@@ -222,3 +222,18 @@ ts-node src/receive_log_topic.ts "kern.*"
 ```sh
 s-node src/emit_log_topic.ts 'kern.critical' 'a critical kernel error'
 ```
+
+### rpc
+
+```sh
+ts-node src/rpc_server.ts
+ [x] Awaiting RPC requests
+ [.] fib(30)
+ [.] fib(30)
+```
+
+```sh
+ts-node src/rpc_client.ts 30
+ [x] Requesting fib(30)
+ [.] Got 832040
+```
