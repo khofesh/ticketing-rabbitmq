@@ -16,6 +16,14 @@ const start = async () => {
       `amqp://${process.env.RABBIT_USER}:${process.env.RABBIT_PASSWORD}@${process.env.RABBIT_URL}`
     );
 
+    process.once("SIGINT", function () {
+      rabbitWrapper.connection.close();
+    });
+
+    process.once("SIGTERM", function () {
+      rabbitWrapper.connection.close();
+    });
+
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to MongoDb");
   } catch (err) {
