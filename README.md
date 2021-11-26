@@ -112,7 +112,7 @@ spec:
 apply the config
 
 ```sh
-kubectl apply -f infra/k8s/rabbitmq.yml
+kubectl apply -f infra/rabbit/rabbitmq.yml
 ```
 
 check
