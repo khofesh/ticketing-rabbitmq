@@ -42,7 +42,7 @@ router.put(
 
     // create a channel and produce data
     const ch = await rabbitWrapper.connection.createChannel();
-    await new TicketUpdatedProducer(ch).produce(
+    new TicketUpdatedProducer(ch).produce(
       {
         id: ticket.id,
         title: ticket.title,
