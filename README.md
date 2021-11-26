@@ -239,3 +239,13 @@ ts-node src/rpc_client.ts 30
  [x] Requesting fib(30)
  [.] Got 832040
 ```
+
+## rabbit on app
+
+```sh
+kubectl create secret generic rabbit-user --from-literal RABBIT_USER=thepassword
+secret/rabbit-user created
+
+kubectl create secret generic rabbit-password --from-literal RABBIT_PASSWORD=thepassword
+secret/rabbit-password created
+```

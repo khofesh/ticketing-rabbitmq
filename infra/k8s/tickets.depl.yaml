@@ -19,6 +19,18 @@ spec:
           env:
             - name: MONGO_URI
               value: "mongodb://tickets-mongo-srv:27017/tickets"
+            - name: RABBIT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-user
+                  key: RABBIT_USER
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-password
+                  key: RABBIT_PASSWORD
+            - name: RABBIT_URL
+              value: "rabbit"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

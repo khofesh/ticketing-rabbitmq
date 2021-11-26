@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { app } from "./app";
+import { rabbitWrapper } from "./rabbit-wrapper";
 
 const start = async () => {
   if (!process.env.JWT_KEY) {
@@ -11,6 +12,12 @@ const start = async () => {
   }
 
   try {
+    console.log(process.env.RABBIT_USER);
+    console.log(process.env.RABBIT_PASSWORD);
+    await rabbitWrapper.connect(
+      `amqp://${process.env.RABBIT_USER}:${process.env.RABBIT_PASSWORD}@${process.env.RABBIT_URL}`
+    );
+
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to MongoDb");
   } catch (err) {

@@ -1,7 +1,13 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
-import { requireAuth, validateRequest } from "@slipperyslope/common";
+import {
+  requireAuth,
+  RoutingKeys,
+  validateRequest,
+} from "@slipperyslope/common";
 import { Ticket } from "../models/ticket";
+import { TicketCreatedProducer } from "../events/producers/ticket-created-producer";
+import { rabbitWrapper } from "../rabbit-wrapper";
 
 const router = express.Router();
 
@@ -24,6 +30,18 @@ router.post(
       userId: req.currentUser!.id,
     });
     await ticket.save();
+
+    // create a channel and produce data
+    const ch = await rabbitWrapper.connection.createChannel();
+    new TicketCreatedProducer(ch).produce(
+      {
+        id: ticket.id,
+        title: ticket.title,
+        price: ticket.price,
+        userId: ticket.userId,
+      },
+      RoutingKeys.Tickets
+    );
 
     res.status(201).send(ticket);
   }
