@@ -1,9 +1,10 @@
 import amqp from "amqplib";
 import { Exchanges } from "./exchanges";
+import { RoutingKeys } from "./routing-keys";
 
 interface Event {
   exchange: Exchanges;
-  routingKey: string;
+  routingKey: RoutingKeys;
   data: any;
 }
 

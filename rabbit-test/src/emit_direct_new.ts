@@ -1,5 +1,6 @@
 import amqp from "amqplib";
 import dotenv from "dotenv";
+import { RoutingKeys } from "./events/routing-keys";
 import { TicketCreatedProducer } from "./events/ticket-created-producer";
 dotenv.config();
 
@@ -19,7 +20,7 @@ amqp
             title: "concert",
             price: 20,
           },
-          "ticket"
+          RoutingKeys.Tickets
         );
       })
       .finally(function () {

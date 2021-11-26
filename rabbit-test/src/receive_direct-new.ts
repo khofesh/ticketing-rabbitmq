@@ -1,5 +1,6 @@
 import amqp from "amqplib";
 import dotenv from "dotenv";
+import { RoutingKeys } from "./events/routing-keys";
 import { TicketCreatedConsumer } from "./events/ticket-created-consumer";
 
 dotenv.config();
@@ -14,7 +15,7 @@ amqp
     });
 
     return conn.createChannel().then(async function (ch) {
-      new TicketCreatedConsumer(ch).consume("ticket");
+      new TicketCreatedConsumer(ch).consume(RoutingKeys.Tickets);
     });
   })
   .catch(console.warn);
