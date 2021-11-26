@@ -22,28 +22,34 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { title, price } = req.body;
+    try {
+      const { title, price } = req.body;
 
-    const ticket = Ticket.build({
-      title,
-      price,
-      userId: req.currentUser!.id,
-    });
-    await ticket.save();
+      const ticket = Ticket.build({
+        title,
+        price,
+        userId: req.currentUser!.id,
+      });
+      await ticket.save();
 
-    // create a channel and produce data
-    const ch = await rabbitWrapper.connection.createChannel();
-    new TicketCreatedProducer(ch).produce(
-      {
-        id: ticket.id,
-        title: ticket.title,
-        price: ticket.price,
-        userId: ticket.userId,
-      },
-      RoutingKeys.Tickets
-    );
+      // create a channel and produce data
+      const ch = await rabbitWrapper.connection.createChannel();
+      await new TicketCreatedProducer(ch).produce(
+        {
+          id: ticket.id,
+          title: ticket.title,
+          price: ticket.price,
+          userId: ticket.userId,
+        },
+        RoutingKeys.Tickets
+      );
 
-    res.status(201).send(ticket);
+      // await ch.close();
+
+      res.status(201).send(ticket);
+    } catch (error) {
+      console.error(error);
+    }
   }
 );
 

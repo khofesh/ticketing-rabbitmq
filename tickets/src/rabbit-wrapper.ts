@@ -1,7 +1,7 @@
-import * as amqp from "amqplib";
+import { connect, Connection } from "amqplib";
 
 class RabbitWrapper {
-  private _conn?: amqp.Connection;
+  private _conn?: Connection;
 
   get connection() {
     if (!this._conn) {
@@ -13,7 +13,9 @@ class RabbitWrapper {
 
   async connect(url: string) {
     try {
-      this._conn = await amqp.connect(url);
+      this._conn = await connect(url);
+
+      console.log("connected to rabbitmq");
     } catch (error) {
       console.warn(error);
     }

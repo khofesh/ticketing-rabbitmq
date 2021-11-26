@@ -12,8 +12,6 @@ const start = async () => {
   }
 
   try {
-    console.log(process.env.RABBIT_USER);
-    console.log(process.env.RABBIT_PASSWORD);
     await rabbitWrapper.connect(
       `amqp://${process.env.RABBIT_USER}:${process.env.RABBIT_PASSWORD}@${process.env.RABBIT_URL}`
     );

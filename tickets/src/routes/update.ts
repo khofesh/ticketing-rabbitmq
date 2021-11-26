@@ -5,8 +5,11 @@ import {
   NotFoundError,
   requireAuth,
   NotAuthorizedError,
+  RoutingKeys,
 } from "@slipperyslope/common";
 import { Ticket } from "../models/ticket";
+import { TicketUpdatedProducer } from "../events/producers/ticket-update-producer";
+import { rabbitWrapper } from "../rabbit-wrapper";
 
 const router = express.Router();
 
@@ -36,6 +39,18 @@ router.put(
       price: req.body.price,
     });
     await ticket.save();
+
+    // create a channel and produce data
+    const ch = await rabbitWrapper.connection.createChannel();
+    await new TicketUpdatedProducer(ch).produce(
+      {
+        id: ticket.id,
+        title: ticket.title,
+        price: ticket.price,
+        userId: ticket.userId,
+      },
+      RoutingKeys.Tickets
+    );
 
     res.send(ticket);
   }

@@ -249,3 +249,56 @@ secret/rabbit-user created
 kubectl create secret generic rabbit-password --from-literal RABBIT_PASSWORD=thepassword
 secret/rabbit-password created
 ```
+
+inside `tickets.depl.yaml` add the following right before `- name: JWT_KEY`
+
+```yaml
+- name: RABBIT_USER
+  valueFrom:
+    secretKeyRef:
+      name: rabbit-user
+      key: RABBIT_USER
+- name: RABBIT_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: rabbit-password
+      key: RABBIT_PASSWORD
+- name: RABBIT_URL
+  value: "rabbit"
+```
+
+### test
+
+```sh
+skaffold dev
+```
+
+port-forward
+
+```sh
+kubectl port-forward rabbit-server-0 5672:5672
+```
+
+change dir to rabbit-test then run
+
+```sh
+ts-node src/emit_direct_new.ts
+```
+
+hit endpoint `https://ticketing.dev/api/tickets` with method `POST` and json body :
+
+```json
+{
+  "title": "concert",
+  "price": 500
+}
+```
+
+result
+
+```sh
+[fahmad@ryzen rabbit-test] $ ts-node src/receive_direct-new.ts
+ [*] Waiting for logs. To exit press CTRL+C
+ [x] tickets: '{"id":"61a098920d5a50f6ddcfc4dd","title":"concert","price":500,"userId":"61a097c301126ea70bb547d4"}'
+ [x] tickets: '{"id":"61a09c082f66716e91dde5fb","title":"concert","price":500,"userId":"61a09bfeadd1ec605b55f19b"}'
+```
