@@ -4,12 +4,15 @@ import {
   NotFoundError,
   OrderStatus,
   requireAuth,
+  RoutingKeys,
   validateRequest,
 } from "@slipperyslope/common";
 import { body } from "express-validator";
 import mongoose from "mongoose";
 import { Ticket } from "../models/ticket";
 import { Order } from "../models/order";
+import { rabbitWrapper } from "../rabbit-wrapper";
+import { OrderCreatedProducer } from "../events/producers/order-created-producer";
 
 const router = express.Router();
 
@@ -61,6 +64,20 @@ router.post(
     await order.save();
 
     // publish an event saying that an order was created
+    const ch = await rabbitWrapper.connection.createChannel();
+    await new OrderCreatedProducer(ch).produce(
+      {
+        id: order.id,
+        status: order.status,
+        userId: order.userId,
+        expiresAt: order.expiresAt.toISOString(),
+        ticket: {
+          id: ticket.id,
+          price: ticket.price,
+        },
+      },
+      RoutingKeys.Orders
+    );
 
     // return to user
     res.status(201).send(order);
