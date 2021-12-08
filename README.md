@@ -1,3 +1,11 @@
+## minikube
+
+```sh
+minikube start
+skaffold config set --global local-cluster true
+eval $(minikube -p minikube docker-env)
+```
+
 ## krew
 
 https://krew.sigs.k8s.io/docs/user-guide/setup/install/
