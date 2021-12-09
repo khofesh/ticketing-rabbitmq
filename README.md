@@ -316,3 +316,9 @@ result
  [x] tickets: '{"id":"61a098920d5a50f6ddcfc4dd","title":"concert","price":500,"userId":"61a097c301126ea70bb547d4"}'
  [x] tickets: '{"id":"61a09c082f66716e91dde5fb","title":"concert","price":500,"userId":"61a09bfeadd1ec605b55f19b"}'
 ```
+
+## errors
+
+```shell
+Error: Channel closed by server: 406 (PRECONDITION-FAILED) with message "PRECONDITION_FAILED - delivery acknowledgement on channel 1 timed out. Timeout value used: 1800000 ms. This timeout value can be configured, see consumers doc guide to learn more"
+```
