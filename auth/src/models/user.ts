@@ -41,6 +41,7 @@ const userSchema = new mongoose.Schema(
         delete ret.__v;
       },
     },
+    optimisticConcurrency: true,
   }
 );
 
