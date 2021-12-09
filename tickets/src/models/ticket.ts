@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 interface TicketAttrs {
   title: string;
@@ -38,6 +38,7 @@ const ticketSchema = new mongoose.Schema(
         delete ret._id;
       },
     },
+    optimisticConcurrency: true,
   }
 );
 
@@ -45,6 +46,6 @@ ticketSchema.statics.build = (attrs: TicketAttrs) => {
   return new Ticket(attrs);
 };
 
-const Ticket = mongoose.model<TicketDoc, TicketModel>('Ticket', ticketSchema);
+const Ticket = mongoose.model<TicketDoc, TicketModel>("Ticket", ticketSchema);
 
 export { Ticket };
