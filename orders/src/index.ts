@@ -1,5 +1,8 @@
+import { RoutingKeys } from "@slipperyslope/common";
 import mongoose from "mongoose";
 import { app } from "./app";
+import { TicketCreatedConsumer } from "./events/consumers/ticket-created-consumer";
+import { TicketUpdatedConsumer } from "./events/consumers/ticket-updated-consumer";
 import { rabbitWrapper } from "./rabbit-wrapper";
 
 const start = async () => {
@@ -23,6 +26,11 @@ const start = async () => {
     process.once("SIGTERM", function () {
       rabbitWrapper.connection.close();
     });
+
+    // listener
+    const ch = await rabbitWrapper.connection.createChannel();
+    new TicketCreatedConsumer(ch).consume(RoutingKeys.Tickets);
+    new TicketUpdatedConsumer(ch).consume(RoutingKeys.Tickets);
 
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to MongoDb");

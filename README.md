@@ -6,6 +6,12 @@ skaffold config set --global local-cluster true
 eval $(minikube -p minikube docker-env)
 ```
 
+### IP
+
+```shell
+minikube ip
+```
+
 ## krew
 
 https://krew.sigs.k8s.io/docs/user-guide/setup/install/
