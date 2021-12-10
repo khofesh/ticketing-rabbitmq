@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expiration-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expiration
+  template:
+    metadata:
+      labels:
+        app: expiration
+    spec:
+      containers:
+        - name: expiration
+          image: khofesh/expiration
+          imagePullPolicy: Never
+          env:
+            - name: RABBIT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-user
+                  key: RABBIT_USER
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-password
+                  key: RABBIT_PASSWORD
+            - name: RABBIT_URL
+              value: "rabbit"
+            - name: REDIS_HOST
+              value: expiration-redis-srv
