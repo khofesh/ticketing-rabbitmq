@@ -7,6 +7,7 @@ import {
 } from "@slipperyslope/common";
 import { Ticket } from "../../models/ticket";
 import { TicketUpdatedProducer } from "../producers/ticket-updated-producer";
+import { rabbitWrapper } from "../../rabbit-wrapper";
 
 export class OrderCanceledConsumer extends Consumer<OrderCanceledEvent> {
   exchange: Exchanges.OrderCanceled = Exchanges.OrderCanceled;
@@ -30,7 +31,9 @@ export class OrderCanceledConsumer extends Consumer<OrderCanceledEvent> {
         await ticket.save();
 
         // produce 'ticket updated'
-        await new TicketUpdatedProducer(this.channel).produce(
+        // listener
+        const ch = await rabbitWrapper.connection.createChannel();
+        await new TicketUpdatedProducer(ch).produce(
           {
             id: ticket.id,
             price: ticket.price,
