@@ -1,9 +1,9 @@
-import { RoutingKeys } from "@slipperyslope/common";
 import mongoose from "mongoose";
 import { app } from "./app";
 import { TicketCreatedConsumer } from "./events/consumers/ticket-created-consumer";
 import { TicketUpdatedConsumer } from "./events/consumers/ticket-updated-consumer";
 import { rabbitWrapper } from "./rabbit-wrapper";
+import { RoutingKeys } from "@slipperyslope/common";
 
 const start = async () => {
   if (!process.env.JWT_KEY) {

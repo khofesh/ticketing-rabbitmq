@@ -6,9 +6,10 @@ import {
   requireAuth,
   NotAuthorizedError,
   RoutingKeys,
+  BadRequestError,
 } from "@slipperyslope/common";
 import { Ticket } from "../models/ticket";
-import { TicketUpdatedProducer } from "../events/producers/ticket-update-producer";
+import { TicketUpdatedProducer } from "../events/producers/ticket-updated-producer";
 import { rabbitWrapper } from "../rabbit-wrapper";
 
 const router = express.Router();
@@ -28,6 +29,10 @@ router.put(
 
     if (!ticket) {
       throw new NotFoundError();
+    }
+
+    if (ticket.orderId) {
+      throw new BadRequestError("Ticket is reserved");
     }
 
     if (ticket.userId !== req.currentUser!.id) {
