@@ -1,3 +1,9 @@
+## TODO
+
+1. tests
+2. implement amqp-connection-manager
+3. logging service
+
 ## minikube
 
 ```sh

@@ -4,6 +4,7 @@ import { TicketCreatedConsumer } from "./events/consumers/ticket-created-consume
 import { TicketUpdatedConsumer } from "./events/consumers/ticket-updated-consumer";
 import { rabbitWrapper } from "./rabbit-wrapper";
 import { RoutingKeys } from "@slipperyslope/common";
+import { ExpirationCompleteConsumer } from "./events/consumers/expiration-complete-consumer";
 
 const start = async () => {
   if (!process.env.JWT_KEY) {
@@ -31,6 +32,7 @@ const start = async () => {
     const ch = await rabbitWrapper.connection.createChannel();
     new TicketCreatedConsumer(ch).consume(RoutingKeys.Tickets);
     new TicketUpdatedConsumer(ch).consume(RoutingKeys.Tickets);
+    new ExpirationCompleteConsumer(ch).consume(RoutingKeys.Expiration);
 
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to MongoDb");
