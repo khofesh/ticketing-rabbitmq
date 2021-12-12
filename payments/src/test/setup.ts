@@ -6,6 +6,8 @@ declare global {
   function signin(id?: string): string[];
 }
 
+process.env.STRIPE_KEY = "your key";
+
 let mongo: any;
 beforeAll(async () => {
   process.env.JWT_KEY = "asdfasdf";
@@ -28,14 +30,14 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  await mongo.stop();
+  // await mongo.stop();
   await mongoose.connection.close();
 });
 
 global.signin = (id?: string) => {
   // Build a JWT payload.  { id, email }
   const payload = {
-    id: id ? id : new mongoose.Types.ObjectId().toHexString(),
+    id: id || new mongoose.Types.ObjectId().toHexString(),
     email: "test@test.com",
   };
 
