@@ -4,10 +4,13 @@ import {
   requireAuth,
   validateRequest,
   OrderStatus,
+  RoutingKeys,
 } from "@slipperyslope/common";
 import { Order } from "../models/order";
 import { stripe } from "../stripe";
 import { Payment } from "../models/payment";
+import { PaymentCreatedProducer } from "../events/producers/payment-created-producer";
+import { rabbitWrapper } from "../rabbit-wrapper";
 
 const router = express.Router();
 
@@ -46,7 +49,18 @@ router.post(
       });
       await payment.save();
 
-      res.status(201).send({ success: true });
+      // create a channel and produce data
+      const ch = await rabbitWrapper.connection.createChannel();
+      new PaymentCreatedProducer(ch).produce(
+        {
+          id: payment.id,
+          orderId: payment.orderId,
+          stripeId: payment.stripeId,
+        },
+        RoutingKeys.Payments
+      );
+
+      res.status(201).send({ success: true, id: payment.id });
     } catch (error) {
       res.status(500).send({ success: false, message: "Error in the server" });
     }

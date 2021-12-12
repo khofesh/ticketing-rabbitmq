@@ -28,6 +28,10 @@ export class ExpirationCompleteConsumer extends Consumer<ExpirationCompleteEvent
           throw new Error("order not found");
         }
 
+        if (order.status === OrderStatus.Complete) {
+          return;
+        }
+
         order.set({
           status: OrderStatus.Canceled,
         });

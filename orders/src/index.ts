@@ -5,6 +5,7 @@ import { TicketUpdatedConsumer } from "./events/consumers/ticket-updated-consume
 import { rabbitWrapper } from "./rabbit-wrapper";
 import { RoutingKeys } from "@slipperyslope/common";
 import { ExpirationCompleteConsumer } from "./events/consumers/expiration-complete-consumer";
+import { PaymentCreatedConsumer } from "./events/consumers/payment-created-consumer";
 
 const start = async () => {
   if (!process.env.JWT_KEY) {
@@ -33,6 +34,7 @@ const start = async () => {
     new TicketCreatedConsumer(ch).consume(RoutingKeys.Tickets);
     new TicketUpdatedConsumer(ch).consume(RoutingKeys.Tickets);
     new ExpirationCompleteConsumer(ch).consume(RoutingKeys.Expiration);
+    new PaymentCreatedConsumer(ch).consume(RoutingKeys.Payments);
 
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to MongoDb");
