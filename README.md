@@ -387,3 +387,7 @@ kubectl get secrets
 ### charge
 
 https://stripe.com/docs/api/charges/create
+
+## npm update
+
+https://github.com/npm/cli/issues/708#issuecomment-965430893
