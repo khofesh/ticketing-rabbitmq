@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
-import StripeCheckout from 'react-stripe-checkout';
-import Router from 'next/router';
-import useRequest from '../../hooks/use-request';
+import { useEffect, useState } from "react";
+import Router from "next/router";
+import useRequest from "../../hooks/use-request";
 
 const OrderShow = ({ order, currentUser }) => {
   const [timeLeft, setTimeLeft] = useState(0);
   const { doRequest, errors } = useRequest({
-    url: '/api/payments',
-    method: 'post',
+    url: "/api/payments",
+    method: "post",
     body: {
       orderId: order.id,
+      token: "tok_visa",
     },
-    onSuccess: () => Router.push('/orders'),
+    onSuccess: () => Router.push("/orders"),
   });
 
   useEffect(() => {
@@ -32,15 +32,26 @@ const OrderShow = ({ order, currentUser }) => {
     return <div>Order Expired</div>;
   }
 
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    doRequest();
+  };
+
   return (
     <div>
       Time left to pay: {timeLeft} seconds
-      <StripeCheckout
-        token={({ id }) => doRequest({ token: id })}
-        stripeKey="pk_test_JMdyKVvf8EGTB0Fl28GsN7YY"
-        amount={order.ticket.price * 100}
-        email={currentUser.email}
-      />
+      <div className="mb-3">
+        <h5>amount: {order.ticket.price * 100}</h5>
+      </div>
+      <div className="mb-3">
+        <h5>email: {order.ticket.price * 100}</h5>
+      </div>
+      <form onSubmit={onSubmit} action="/api/payments" method="POST">
+        <button className="btn btn-primary" type="submit">
+          Checkout
+        </button>
+      </form>
       {errors}
     </div>
   );

@@ -35,7 +35,7 @@ const NewTicket = () => {
     <div>
       <h1>Create a Ticket</h1>
       <form onSubmit={onSubmit}>
-        <div className="form-group">
+        <div className="mb-3">
           <label>Title</label>
           <input
             value={title}
@@ -43,7 +43,7 @@ const NewTicket = () => {
             className="form-control"
           />
         </div>
-        <div className="form-group">
+        <div className="mb-3">
           <label>Price</label>
           <input
             value={price}
@@ -53,7 +53,7 @@ const NewTicket = () => {
           />
         </div>
         {errors}
-        <button className="btn btn-summary" type="submit">
+        <button className="btn btn-primary" type="submit">
           Submit
         </button>
       </form>
