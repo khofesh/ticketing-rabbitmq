@@ -367,3 +367,23 @@ const orderSchema = new mongoose.Schema(
   }
 );
 ```
+
+## Stripe
+
+1. sign up
+2. get secret key
+
+```shell
+kubectl create secret generic stripe-secret --from-literal STRIPE_KEY=sfsdfsdfsdf
+
+```
+
+check it out
+
+```shell
+kubectl get secrets
+```
+
+### charge
+
+https://stripe.com/docs/api/charges/create
