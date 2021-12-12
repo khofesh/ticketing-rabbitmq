@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import { app } from "./app";
 import { rabbitWrapper } from "./rabbit-wrapper";
 import { RoutingKeys } from "@slipperyslope/common";
+import { OrderCreatedConsumer } from "./events/consumers/order-created-consumer";
+import { OrderCanceledConsumer } from "./events/consumers/order-canceled-consumer";
 
 const start = async () => {
   if (!process.env.JWT_KEY) {
@@ -27,6 +29,8 @@ const start = async () => {
 
     // listener
     const ch = await rabbitWrapper.connection.createChannel();
+    new OrderCreatedConsumer(ch).consume(RoutingKeys.Orders);
+    new OrderCanceledConsumer(ch).consume(RoutingKeys.Orders);
 
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to MongoDb");
