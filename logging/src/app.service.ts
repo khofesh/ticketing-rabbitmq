@@ -47,7 +47,8 @@ export class AppService {
         info: msg.info,
       });
 
-      await createdInfo.save();
+      const result = await createdInfo.save();
+      console.log('getLoggingInfo result', result);
     } catch (error) {
       console.log('getLoggingInfo error', error);
     }
@@ -72,7 +73,8 @@ export class AppService {
         debug: JSON.stringify(msg.debug),
       });
 
-      await createdDebug.save();
+      const result = await createdDebug.save();
+      console.log('getLoggingDebug result', result);
     } catch (error) {
       console.log('getLoggingDebug error', error);
     }
@@ -97,7 +99,8 @@ export class AppService {
         error: JSON.stringify(msg.error),
       });
 
-      await createdError.save();
+      const result = await createdError.save();
+      console.log('getLoggingError result', result);
     } catch (error) {
       console.log('getLoggingError error', error);
     }
@@ -122,7 +125,8 @@ export class AppService {
         warn: JSON.stringify(msg.warn),
       });
 
-      await createdWarn.save();
+      const result = await createdWarn.save();
+      console.log('getLoggingWarn result', result);
     } catch (error) {
       console.log('getLoggingWarn error', error);
     }
