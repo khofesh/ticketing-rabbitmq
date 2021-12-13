@@ -404,6 +404,12 @@ https://github.com/npm/cli/issues/708#issuecomment-965430893
 
 https://docs.github.com/en/actions/quickstart
 
-## nestjs rabbitmq
+## nestjs microservices
+
+### rabbitmq
 
 https://github.com/golevelup/nestjs/tree/master/packages/rabbitmq
+
+### sample
+
+https://github.com/nestjs/nest/tree/master/sample/03-microservices
