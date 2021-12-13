@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@slipperyslope/common": "^1.0.12",
+    "@slipperyslope/common": "^1.0.13",
     "@types/bull": "^3.15.7",
     "amqp-connection-manager": "^3.7.0",
     "amqplib": "^0.8.0",
