@@ -399,3 +399,11 @@ https://stripe.com/docs/api/checkout/sessions/object
 ## npm update
 
 https://github.com/npm/cli/issues/708#issuecomment-965430893
+
+## github actions
+
+https://docs.github.com/en/actions/quickstart
+
+## nestjs rabbitmq
+
+https://github.com/golevelup/nestjs/tree/master/packages/rabbitmq

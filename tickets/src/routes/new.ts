@@ -8,6 +8,7 @@ import {
 import { Ticket } from "../models/ticket";
 import { TicketCreatedProducer } from "../events/producers/ticket-created-producer";
 import { rabbitWrapper } from "../rabbit-wrapper";
+import { LoggingInfoProducer } from "../events/producers/logging-info-producer";
 
 const router = express.Router();
 
@@ -23,6 +24,20 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     try {
+      // create a channel
+      const ch = await rabbitWrapper.connection.createChannel();
+
+      // log info
+      await new LoggingInfoProducer(ch).produce(
+        {
+          serviceName: "tickets",
+          className: "none",
+          functionName: "none",
+          info: "[Begin] route /api/tickets POST, create new ticket",
+        },
+        RoutingKeys.Logging
+      );
+
       const { title, price } = req.body;
 
       const ticket = Ticket.build({
@@ -32,9 +47,10 @@ router.post(
       });
       await ticket.save();
 
-      // create a channel and produce data
-      const ch = await rabbitWrapper.connection.createChannel();
-      await new TicketCreatedProducer(ch).produce(
+      // create a channel
+      const ch2 = await rabbitWrapper.connection.createChannel();
+      // produce data
+      await new TicketCreatedProducer(ch2).produce(
         {
           id: ticket.id,
           title: ticket.title,
@@ -45,6 +61,19 @@ router.post(
       );
 
       // await ch.close();
+
+      // create a channel
+      const ch3 = await rabbitWrapper.connection.createChannel();
+      // log info
+      await new LoggingInfoProducer(ch3).produce(
+        {
+          serviceName: "tickets",
+          className: "none",
+          functionName: "none",
+          info: "[End] route /api/tickets POST, create new ticket",
+        },
+        RoutingKeys.Logging
+      );
 
       res.status(201).send(ticket);
     } catch (error) {

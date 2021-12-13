@@ -11,10 +11,6 @@ async function bootstrap() {
         urls: [
           `amqp://${process.env.RABBIT_USER}:${process.env.RABBIT_PASSWORD}@${process.env.RABBIT_URL}`,
         ],
-        queue: '',
-        queueOptions: {
-          durable: false,
-        },
       },
     },
   );
