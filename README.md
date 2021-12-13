@@ -388,6 +388,14 @@ kubectl get secrets
 
 https://stripe.com/docs/api/charges/create
 
+### references
+
+https://stripe.com/docs/payments/quickstart
+
+https://stripe.com/docs/testing
+
+https://stripe.com/docs/api/checkout/sessions/object
+
 ## npm update
 
 https://github.com/npm/cli/issues/708#issuecomment-965430893
