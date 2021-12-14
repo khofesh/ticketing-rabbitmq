@@ -6,9 +6,14 @@ const getData = ({ req }) => {
     if (typeof window === "undefined") {
       // We are on the server
 
+      // FOR LOCAL DEVELOPMENT
+      // return axios.create({
+      //   baseURL:
+      //     "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local",
+      //   headers: req.headers,
+      // });
       return axios.create({
-        baseURL:
-          "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local",
+        baseURL: "http://34.124.231.147/",
         headers: req.headers,
       });
     } else {
