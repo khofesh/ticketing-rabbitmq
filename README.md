@@ -1,7 +1,7 @@
 ## TODO
 
 1. tests
-2. replace cookie session with connect-mongo
+2. all mongo sessions connect to mongodb://auth-mongo-srv:27017/session
 
 ## minikube
 

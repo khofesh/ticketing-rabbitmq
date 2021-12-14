@@ -26,6 +26,12 @@ prepend `CLOUDSDK_PYTHON=python3.9` in every gcloud command
 CLOUDSDK_PYTHON=python3.9 gcloud config set compute/zone asia-southeast1-a
 ```
 
+or you could do the following:
+
+```shell
+export CLOUDSDK_PYTHON=python3.9
+```
+
 ## get credentials
 
 ```shell
