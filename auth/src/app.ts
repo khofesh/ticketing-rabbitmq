@@ -13,6 +13,7 @@ app.set("trust proxy", true);
 app.use(express.json());
 app.use(
   cookieSession({
+    name: "ticketing_session",
     signed: false,
     secure: process.env.NODE_ENV !== "test",
   })
