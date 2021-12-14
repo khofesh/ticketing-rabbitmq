@@ -11,7 +11,7 @@ build:
     - image: khofesh/auth
       context: auth
       docker:
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile.dev
       sync:
         manual:
           - src: "src/**/*.ts"
@@ -19,7 +19,7 @@ build:
     - image: khofesh/ticketing-client
       context: client
       docker:
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile.dev
       sync:
         manual:
           - src: "**/*.js"
@@ -27,7 +27,7 @@ build:
     - image: khofesh/tickets
       context: tickets
       docker:
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile.dev
       sync:
         manual:
           - src: "src/**/*.ts"
@@ -35,7 +35,7 @@ build:
     - image: khofesh/orders
       context: orders
       docker:
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile.dev
       sync:
         manual:
           - src: "src/**/*.ts"
@@ -43,7 +43,7 @@ build:
     - image: khofesh/expiration
       context: expiration
       docker:
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile.dev
       sync:
         manual:
           - src: "src/**/*.ts"
@@ -51,7 +51,7 @@ build:
     - image: khofesh/payments
       context: payments
       docker:
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile.dev
       sync:
         manual:
           - src: "src/**/*.ts"
