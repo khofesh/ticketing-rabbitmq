@@ -15,7 +15,6 @@ spec:
       containers:
         - name: payments
           image: khofesh/payments
-          imagePullPolicy: Never
           env:
             - name: MONGO_URI
               value: "mongodb://payments-mongo-srv:27017/payments"
@@ -41,6 +40,13 @@ spec:
                 secretKeyRef:
                   name: stripe-secret
                   key: STRIPE_KEY
+          resources:
+            requests:
+              cpu: 25m
+              memory: 128Mi
+            limits:
+              cpu: 2000m
+              memory: 512Mi
 ---
 apiVersion: v1
 kind: Service

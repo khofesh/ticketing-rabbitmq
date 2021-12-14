@@ -15,7 +15,6 @@ spec:
       containers:
         - name: logging
           image: khofesh/logging
-          imagePullPolicy: Never
           env:
             - name: MONGO_URI_ERROR
               value: "mongodb://logging-mongo-srv:27017/logging-error"
@@ -42,6 +41,13 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
+          resources:
+            requests:
+              cpu: 25m
+              memory: 128Mi
+            limits:
+              cpu: 2000m
+              memory: 512Mi
 
 ---
 apiVersion: v1
