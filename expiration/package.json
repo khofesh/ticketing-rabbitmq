@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev src/index.ts",
-    "test": "jest --watchAll --no-cache"
+    "test": "jest --watchAll --no-cache",
+    "test:ci": "jest",
+    "build": "tsc --project ./"
   },
   "jest": {
     "preset": "ts-jest",
@@ -19,17 +21,17 @@
   "license": "ISC",
   "dependencies": {
     "@slipperyslope/common": "^1.0.13",
-    "@types/bull": "^3.15.7",
     "amqp-connection-manager": "^3.7.0",
     "amqplib": "^0.8.0",
-    "bull": "^4.1.1",
-    "ts-node-dev": "^1.1.8",
-    "typescript": "^4.5.2"
+    "bull": "^4.1.1"
   },
   "devDependencies": {
     "@types/amqplib": "^0.8.2",
     "@types/jest": "^27.0.3",
+    "@types/bull": "^3.15.7",
     "jest": "^27.3.1",
-    "ts-jest": "^27.0.7"
+    "ts-jest": "^27.0.7",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.2"
   }
 }
