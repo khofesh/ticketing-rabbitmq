@@ -4,6 +4,7 @@ import { rabbitWrapper } from "./rabbit-wrapper";
 
 const start = async () => {
   try {
+    console.log("expiration 1");
     await rabbitWrapper.connect(
       `amqp://${process.env.RABBIT_USER}:${process.env.RABBIT_PASSWORD}@${process.env.RABBIT_URL}`
     );
