@@ -1,6 +1,7 @@
 ## TODO
 
 1. tests
+2. cookie session doesn't work
 
 ## minikube
 
