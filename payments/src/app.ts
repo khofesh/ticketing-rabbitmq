@@ -1,6 +1,7 @@
 import express from "express";
 import "express-async-errors";
-import cookieSession from "cookie-session";
+import MongoStore from "connect-mongo";
+import session from "express-session";
 
 import {
   errorHandler,
@@ -13,9 +14,19 @@ const app = express();
 app.set("trust proxy", true);
 app.use(express.json());
 app.use(
-  cookieSession({
-    signed: false,
-    secure: false,
+  session({
+    name: "ticketing_session",
+    secret: process.env.JWT_KEY!,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI_SESSION,
+    }),
+    cookie: {
+      httpOnly: true,
+      sameSite: "lax",
+      // secure: true,
+      // expires: expiryDate,
+      // maxAge: 60000 * 2, // 2 minutes
+    },
   })
 );
 app.use(currentUser);
