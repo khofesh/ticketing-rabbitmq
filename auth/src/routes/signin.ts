@@ -37,9 +37,7 @@ router.post(
     );
 
     // store jwt on session object
-    req.session = {
-      jwt: userJwt,
-    };
+    req.session.jwt = userJwt;
 
     res.status(200).send(existingUser);
   }
