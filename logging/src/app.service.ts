@@ -25,6 +25,7 @@ export class AppService {
   ) {}
 
   getHello(): string {
+    console.log('logging 1');
     return 'Hello World!';
   }
 
