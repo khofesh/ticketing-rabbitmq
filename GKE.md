@@ -102,3 +102,30 @@ kubectl apply -f infra/gke/
 ### Notes
 
 http://g.co/gke/autopilot-resources
+
+```sh
+Warning: Autopilot increased resource requests for Deployment default/client-depl to meet requirements. See http://g.co/gke/autopilot-resources.
+```
+
+## Ingress
+
+open google shell
+
+```shell
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm install my-release ingress-nginx/ingress-nginx
+```
+
+**wait for several minutes**
+
+apply ingress config
+
+```shell
+kubectl apply -f infra/k8s-prod/
+```
+
+## restart a deployment
+
+```shell
+kubectl rollout restart deployment client-depl
+```
