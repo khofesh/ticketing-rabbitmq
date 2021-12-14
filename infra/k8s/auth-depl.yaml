@@ -15,10 +15,11 @@ spec:
       containers:
         - name: auth
           image: khofesh/auth
-          imagePullPolicy: Never
           env:
             - name: MONGO_URI
               value: "mongodb://auth-mongo-srv:27017/auth"
+            - name: MONGO_URI_SESSION
+              value: "mongodb://auth-mongo-srv:27017/session"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
