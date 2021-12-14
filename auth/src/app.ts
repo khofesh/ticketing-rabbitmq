@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(
   session({
     name: "ticketing_session",
-    secret: process.env.JWT_KEY!,
+    secret: "hello",
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI_SESSION,
     }),
