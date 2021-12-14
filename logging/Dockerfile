@@ -4,7 +4,7 @@ FROM node:16-alpine3.14 as development
 
 WORKDIR /app
 
-COPY ["package.json", "yarn.lock", "./"]
+COPY ["package.json", "package-lock.json", "./"]
 
 RUN yarn install 
 
