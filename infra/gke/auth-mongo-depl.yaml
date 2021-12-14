@@ -12,6 +12,10 @@ spec:
       labels:
         app: auth-mongo
     spec:
+      volumes:
+        - name: mongo-storage
+          persistentVolumeClaim:
+            claimName: auth-mongo-persistent-volume-claim
       containers:
         - name: auth-mongo
           image: mongo

@@ -12,6 +12,10 @@ spec:
       labels:
         app: tickets-mongo
     spec:
+      volumes:
+        - name: mongo-storage
+          persistentVolumeClaim:
+            claimName: tickets-mongo-persistent-volume-claim
       containers:
         - name: tickets-mongo
           image: mongo

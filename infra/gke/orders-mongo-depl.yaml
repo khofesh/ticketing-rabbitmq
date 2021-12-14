@@ -12,6 +12,10 @@ spec:
       labels:
         app: orders-mongo
     spec:
+      volumes:
+        - name: mongo-storage
+          persistentVolumeClaim:
+            claimName: orders-mongo-persistent-volume-claim
       containers:
         - name: orders-mongo
           image: mongo

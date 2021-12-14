@@ -12,6 +12,10 @@ spec:
       labels:
         app: logging-mongo
     spec:
+      volumes:
+        - name: mongo-storage
+          persistentVolumeClaim:
+            claimName: logging-mongo-persistent-volume-claim
       containers:
         - name: logging-mongo
           image: mongo
