@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logging-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logging
+  template:
+    metadata:
+      labels:
+        app: logging
+    spec:
+      containers:
+        - name: logging
+          image: khofesh/logging
+          imagePullPolicy: Never
+          env:
+            - name: MONGO_URI_ERROR
+              value: "mongodb://logging-mongo-srv:27017/logging-error"
+            - name: MONGO_URI_INFO
+              value: "mongodb://logging-mongo-srv:27017/logging-info"
+            - name: MONGO_URI_WARN
+              value: "mongodb://logging-mongo-srv:27017/logging-warn"
+            - name: MONGO_URI_DEBUG
+              value: "mongodb://logging-mongo-srv:27017/logging-debug"
+            - name: RABBIT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-user
+                  key: RABBIT_USER
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-password
+                  key: RABBIT_PASSWORD
+            - name: RABBIT_URL
+              value: "rabbit"
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logging-srv
+spec:
+  selector:
+    app: logging
+  type: ClusterIP
+  ports:
+    - name: logging
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
