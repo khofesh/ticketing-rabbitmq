@@ -499,3 +499,7 @@ eval $(minikube -p minikube docker-env)
 ## ingress nginx
 
 https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/
+
+## nextjs dockerfile
+
+https://nextjs.org/docs/deployment
