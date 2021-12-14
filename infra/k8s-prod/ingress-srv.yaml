@@ -5,6 +5,10 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/affinity-mode: "balanced"
+    nginx.ingress.kubernetes.io/affinity-canary-behavior: "sticky"
+    nginx.ingress.kubernetes.io/session-cookie-name: "express:sess"
 spec:
   rules:
     - http:
