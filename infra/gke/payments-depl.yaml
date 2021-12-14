@@ -18,6 +18,8 @@ spec:
           env:
             - name: MONGO_URI
               value: "mongodb://payments-mongo-srv:27017/payments"
+            - name: MONGO_URI_SESSION
+              value: "mongodb://payments-mongo-srv:27017/session"
             - name: RABBIT_USER
               valueFrom:
                 secretKeyRef:

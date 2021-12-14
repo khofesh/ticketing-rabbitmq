@@ -19,6 +19,8 @@ spec:
           env:
             - name: MONGO_URI
               value: "mongodb://orders-mongo-srv:27017/orders"
+            - name: MONGO_URI_SESSION
+              value: "mongodb://orders-mongo-srv:27017/session"
             - name: RABBIT_USER
               valueFrom:
                 secretKeyRef:

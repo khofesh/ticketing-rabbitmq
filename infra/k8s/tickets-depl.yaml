@@ -19,6 +19,8 @@ spec:
           env:
             - name: MONGO_URI
               value: "mongodb://tickets-mongo-srv:27017/tickets"
+            - name: MONGO_URI_SESSION
+              value: "mongodb://tickets-mongo-srv:27017/session"
             - name: RABBIT_USER
               valueFrom:
                 secretKeyRef:
