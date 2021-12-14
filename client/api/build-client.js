@@ -2,6 +2,7 @@ import axios from "axios";
 
 const getData = ({ req }) => {
   try {
+    console.log("client 1");
     if (typeof window === "undefined") {
       // We are on the server
 
