@@ -7,6 +7,12 @@ import { Password } from "../services/password";
 
 const router = express.Router();
 
+declare module "express-session" {
+  interface Session {
+    jwt: string;
+  }
+}
+
 router.post(
   "/api/users/signin",
   [
