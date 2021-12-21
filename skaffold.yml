@@ -65,3 +65,11 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: khofesh/expiration-net
+      context: expirationNet
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.cs"
+            dest: .

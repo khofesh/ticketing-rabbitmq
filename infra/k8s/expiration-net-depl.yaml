@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expiration-net-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expiration-net
+  template:
+    metadata:
+      labels:
+        app: expiration-net
+    spec:
+      containers:
+        - name: expiration-net
+          image: khofesh/expiration-net
+          imagePullPolicy: Never
+          env:
+            - name: RABBIT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-user
+                  key: RABBIT_USER
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-password
+                  key: RABBIT_PASSWORD
+            - name: RABBIT_URL
+              value: "rabbit"

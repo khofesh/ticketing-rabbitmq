@@ -131,6 +131,25 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
+## in skaffold.yml
+
+add the following lines at the bottom
+
+```yaml
+- image: khofesh/expiration-net
+  context: expirationNet
+  docker:
+    dockerfile: Dockerfile
+  sync:
+    manual:
+      - src: "*.cs"
+        dest: .
+```
+
+## k8s yaml config
+
+see `expiration-net-depl.yaml`
+
 ## `dotnet run`
 
 ### port forward rabbitmq
