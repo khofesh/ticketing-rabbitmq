@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
@@ -8,6 +9,14 @@ using RabbitMQ.Client.Events;
 
 namespace expirationNet
 {
+    public class LoggingInfo
+    {
+        public string serviceName { get; set; }
+        public string className { get; set; }
+        public string functionName { get; set; }
+        public string info { get; set; }
+    }
+
     public class ExpirationReceiveService : BackgroundService
     {
         private IServiceProvider _sp;
@@ -64,6 +73,19 @@ namespace expirationNet
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 var routingKey = ea.RoutingKey;
+
+
+                var loggingData = new LoggingInfo
+                {
+                    serviceName = "Expiration Net Core Service",
+                    className = "ExpirationReceiveService",
+                    functionName = "ExecuteAsync",
+                    info = "Expiration Service test logging info"
+                };
+                var sendThisBody = Encoding.UTF8.GetBytes(
+                    JsonSerializer.Serialize(loggingData)
+                );
+                _channel.BasicPublish(exchange: "logging:info", routingKey: "logging", body: sendThisBody);
                 Console.WriteLine(" [x] Received '{0}':'{1}'",
                                   routingKey, message);
             };
