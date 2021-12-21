@@ -169,6 +169,14 @@ dotnet run
 skaffold dev
 ```
 
+expirationNet receives data
+
+![consume data](./images/Screenshot_2021-12-21_13-25-28.png "consume data")
+
+log published by expirationNet
+
+![log info](./images/Screenshot_2021-12-21_13-17-57.png "log info")
+
 ## references
 
 https://dotnet.microsoft.com/en-us/learn/aspnet/microservice-tutorial/intro
