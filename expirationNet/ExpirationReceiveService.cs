@@ -2,7 +2,6 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -39,7 +38,7 @@ namespace expirationNet
             );
             // _channel.QueueDeclare(queue: "heroes", durable: false, exclusive: false, autoDelete: false, arguments: null);
             var routingKey = "orders";
-            _queueName = _channel.QueueDeclare("", exclusive: true).QueueName;
+            _queueName = _channel.QueueDeclare(exclusive: true).QueueName;
 
             _channel.QueueBind(
                 queue: _queueName,
