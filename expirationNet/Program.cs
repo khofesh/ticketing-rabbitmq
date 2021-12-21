@@ -35,13 +35,12 @@ namespace expirationNet
                 {
                     channel.ExchangeDeclare(exchange: "order:created", type: "direct", durable: true);
                     var routingKey = "orders";
-                    var queueName = channel.QueueDeclare().QueueName;
+                    var queueName = channel.QueueDeclare("", exclusive: true).QueueName;
 
                     channel.QueueBind(
                         queue: queueName,
                         exchange: "order:created",
                         routingKey: routingKey
-
                     );
 
                     Console.WriteLine(" [*] Waiting for messages.");
@@ -55,9 +54,11 @@ namespace expirationNet
                         Console.WriteLine(" [x] Received '{0}':'{1}'",
                                           routingKey, message);
                     };
-                    channel.BasicConsume(queue: queueName,
-                                         autoAck: true,
-                                         consumer: consumer);
+                    channel.BasicConsume(
+                        queue: queueName,
+                        autoAck: true,
+                        consumer: consumer
+                    );
                 }
             }
             catch (System.Exception error)

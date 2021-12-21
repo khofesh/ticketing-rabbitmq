@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: expiration
-          image: khofesh/expiration
+          image: khofesh/expirationNet
           imagePullPolicy: Never
           env:
             - name: RABBIT_USER

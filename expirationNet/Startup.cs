@@ -27,6 +27,7 @@ namespace expirationNet
         {
 
             services.AddControllers();
+            services.AddHostedService<ExpirationReceiveService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "expirationNet", Version = "v1" });

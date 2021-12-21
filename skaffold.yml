@@ -41,14 +41,6 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: khofesh/expiration
-      context: expiration
-      docker:
-        dockerfile: Dockerfile.dev
-      sync:
-        manual:
-          - src: "src/**/*.ts"
-            dest: .
     - image: khofesh/payments
       context: payments
       docker:
@@ -64,4 +56,12 @@ build:
       sync:
         manual:
           - src: "src/**/*.ts"
+            dest: .
+    - image: khofesh/expirationNet
+      context: expirationNet
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.cs"
             dest: .

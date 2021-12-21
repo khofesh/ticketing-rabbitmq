@@ -19,16 +19,19 @@ namespace expirationNetCo
 
                 var factory = new ConnectionFactory()
                 {
-                    HostName = $"amqp://{rabbitUser}:{rabbitPassword}@{rabbitUrl}"
+                    UserName = rabbitUser,
+                    Password = rabbitPassword,
+                    HostName = rabbitUrl
                 };
                 using (var connection = factory.CreateConnection())
                 using (var channel = connection.CreateModel())
                 {
                     channel.ExchangeDeclare(exchange: "order:created", type: "direct", durable: true);
                     var routingKey = "orders";
+                    var queueName = channel.QueueDeclare().QueueName;
 
                     channel.QueueBind(
-                        queue: "",
+                        queue: queueName,
                         exchange: "order:created",
                         routingKey: routingKey
 
@@ -45,7 +48,7 @@ namespace expirationNetCo
                         Console.WriteLine(" [x] Received '{0}':'{1}'",
                                           routingKey, message);
                     };
-                    channel.BasicConsume(queue: "",
+                    channel.BasicConsume(queue: queueName,
                                          autoAck: true,
                                          consumer: consumer);
                 }
