@@ -122,7 +122,7 @@ in `Startup.cs`, register the service
 
 ```c# title="Startup.cs"
 public void ConfigureServices(IServiceCollection services)
-
+{
     ...
 
     services.AddHostedService<ExpirationReceiveService>();
